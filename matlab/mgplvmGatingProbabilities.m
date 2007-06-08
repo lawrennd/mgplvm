@@ -14,6 +14,7 @@ function Xpi = mgplvmGatingProbabilities(model, X)
 %
 % COPYRIGHT : Neil D. Lawrence and Raquel Urtasun, 2007
 
+% MGPLVM
 
 if nargin < 2
   % Assume computation is for model.X

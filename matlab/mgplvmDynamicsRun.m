@@ -9,7 +9,7 @@ function mgplvmDynamicsRun
 %
 % COPYRIGHT : Neil D. Lawrence, 2007
 
-% FGPLVM
+% MGPLVM
 
 global visualiseInfo
 

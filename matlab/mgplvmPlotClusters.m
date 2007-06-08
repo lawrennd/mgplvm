@@ -9,6 +9,8 @@ function [] = mgplvmPlotClusters(model)
 % SEEALSO : lvmTwoDPlot, lvmScatterPlot
 %
 % COPYRIGHT : Raquel Urtasun, 2007
+
+% MGPLVM
   
 % latent space.
 % lbls of the cluster

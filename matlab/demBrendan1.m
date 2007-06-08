@@ -1,6 +1,6 @@
 % DEMBRENDAN1 Model the face data with a 2-D RBF GPLVM.
 
-% GPLVM
+% MGPLVM
 
 % Fix seeds
 randn('seed', 1e5);
