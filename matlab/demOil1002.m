@@ -1,4 +1,4 @@
-% DEMOIL1001 Demonstrate mixtues of DPPCA on oil100 data, with back-constraints
+% DEMOIL1002 Demonstrate mixtues of DPPCA on oil100 data, with back-constraints
 
 % MGPLVM
 

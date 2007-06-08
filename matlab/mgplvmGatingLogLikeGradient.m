@@ -1,6 +1,6 @@
 function [gX] = mgplvmGatingLogLikeGradient(model)
 
-% MGPLVMCOMPUTEGATING Compute the gates of a MGPLVM model.
+% MGPLVMGATINGLOGLIKEGRADIENT Compute the gradients of gates of a MGPLVM model.
 % FORMAT
 % DESC returns the gradients with respect to X of the gating component of
 % the likelihood.

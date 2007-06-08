@@ -1,6 +1,6 @@
 function [gX] = mgplvmGatingLogLikeGradientTest(model,gX)
 
-% MGPLVMCOMPUTEGATING Compute the gates of a MGPLVM model.
+% MGPLVMGATINGLOGLIKEGRADIENTTEST Test gradients of gating.
 % FORMAT
 % 
 %

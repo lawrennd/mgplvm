@@ -1,6 +1,6 @@
 function g = mgplvmLogLikeGradients(model)
   
-% MGPLVMLOGLIKEGRADIENT Compute gradients for the MGPLVM model.
+% MGPLVMLOGLIKEGRADIENTS Compute gradients for the MGPLVM model.
 % FORMAT
 % DESC computes the gradient of the model log likelihood with respect to
 % the Xs and kernel parameters.
