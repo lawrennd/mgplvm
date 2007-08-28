@@ -9,6 +9,8 @@ function mgplvmPrintPlotClusters(model, capName, experimentNo)
 % SEEALSO : lvmTwoDPlot, lvmScatterPlot
 %
 % COPYRIGHT : Raquel Urtasun, 2007
+
+% MGPLVM
   
 % latent space.
 % lbls of the cluster
