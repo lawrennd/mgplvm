@@ -20,7 +20,7 @@ if nargin < 2
   % Assume computation is for model.X
   X = model.X;
 end
-% WOrk out gating probabilities
+% Work out gating probabilities
 lognumer = -0.5*dist2(X, model.centres);
 lognumer = lognumer - repmat(max(lognumer, [], 2), 1, model.M);
 numer = exp(lognumer);

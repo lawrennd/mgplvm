@@ -8,7 +8,7 @@ function ll = mgplvmLogLikelihood(model)
 %
 % SEEALSO : mgplvmCreate, modelLogLikelihood
 %
-% COPYRIGHT : Raquel Urtasun and Neil D. Lawrence, 2007
+% COPYRIGHT : Raquel Urtasun and Neil D. Lawrence, 2007-2008
 
 % MGPLVM
   
