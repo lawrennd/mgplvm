@@ -48,12 +48,12 @@ else
   end
 end
 
-if model.optimiseGating & model.optimiseGatingCentres
-  params = [params model.centres(:)'];
+if model.optimiseCentres
+  params = [params model.gating.centres(:)'];
 end
 
 for m = 1:model.M
-  params = [params kernExtractParam(model.kern{m})];
+  params = [params kernExtractParam(model.comp{m}.kern)];
 end
 
 % add the beta to the params to estimate
@@ -67,7 +67,7 @@ end
 
 if returnNames
   counter = 0;
-  if model.optimiseGating & model.optimiseGatingCentres
+  if model.optimiseCentres
     for j = 1:model.q
       for i = 1:model.M
         counter = counter + 1;
@@ -78,8 +78,8 @@ if returnNames
   endVal = counter;  
   for m = 1:model.M
     startVal = endVal + 1;
-    endVal = endVal + model.kern{m}.nParams;
-    [void, addnames(startVal:endVal)] = kernExtractParam(model.kern{m});
+    endVal = endVal + model.comp{m}.kern.nParams;
+    [void, addnames(startVal:endVal)] = kernExtractParam(model.comp{m}.kern);
   end
   if model.optimiseBeta
     addnames{endVal + 1} = 'beta';

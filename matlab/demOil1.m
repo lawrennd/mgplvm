@@ -24,23 +24,19 @@ display = 1;
 % Set up model
 options = mgplvmOptions;
 
-options.back = 'mlp';
-options.backOptions = mlpOptions;
-options.optimiseInitBack = 1;
-
-options.numComps = 10;
-options.beta = 10000/mean(var(Y));
+options.compLabelConstr = true;
+options.numComps = 100;
+options.beta = (1/(0.5*sqrt(mean(var(Y))))).^2;
 options.kern = {'translate', 'lin', 'bias'};
-
+options.scale = .1;
 latentDim = 2;
 d = size(Y, 2);
 
 display = 1;
-iters = 10;
+iters = 100;
 
 model = mgplvmCreate(latentDim, d, Y, options);
-
-model = mgplvmEMOptimise(model, display, outerIters, eIters, mIters);
+model = mgplvmOptimise(model, display, iters);
 
 capName = dataSetName;;
 capName(1) = upper(capName(1));

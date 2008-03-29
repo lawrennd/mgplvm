@@ -38,7 +38,7 @@ fprintf('  beta: %2.4f\n', model.beta)
 for m = 1:model.M
   fprintf(spacing);
   fprintf('  Kernel %d:\n', m)
-  kernDisplay(model.kern{m}, 4+spaceNum);
+  kernDisplay(model.comp{m}.kern, 4+spaceNum);
 end
 if isfield(model, 'dynamics') & ~isempty(model.dynamics)
   fprintf(spacing);

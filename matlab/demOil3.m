@@ -1,5 +1,4 @@
-% DEMOIL3 Demonstrate mixtues of PCoorA on oil100 data, with
-% back-constraints
+% DEMOIL3 Demonstrate mixtures of GPLVM on oil data, with back-constraints
 
 % MGPLVM
 
@@ -29,9 +28,11 @@ options.back = 'mlp';
 options.backOptions = mlpOptions;
 options.optimiseInitBack = 1;
 
-options.numComps = 5;
-options.beta = 1;
+options.numComps = 50;
+options.beta = (1/(0.5*sqrt(mean(var(Y))))).^2;
 options.kern = {'rbf', 'bias'};
+options.activeThreshold= 0.01;
+options.scale = .25;
 latentDim = 2;
 d = size(Y, 2);
 

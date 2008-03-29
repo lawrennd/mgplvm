@@ -3,7 +3,7 @@
 importLatest('netlab');
 importLatest('datasets');
 importLatest('fgplvm');
-importLatest('gp');
+importTool('gp');
 importLatest('kern');
 importLatest('mocap');
 importLatest('mltools');

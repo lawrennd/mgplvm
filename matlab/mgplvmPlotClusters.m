@@ -38,13 +38,13 @@ switch model.q
   symbol = getSymbols(size(lbls,2));
   data = lvmTwoDPlot(model.X, lbls, symbol); 
   %/~
-  %         plot(model.centres(:,1),model.centres(:,2),'ko');
+  %         plot(model.gating.centres(:,1),model.gating.centres(:,2),'ko');
   %         
-  %         for j=1:size(model.kern,2)
-  %             if (isfield(model.kern{j},'centre'))
-  %                 value = model.centres(j,:)-model.kern{j}.centre;
+  %         for j=1:size(model.comp,2)
+  %             if (isfield(model.comp{j}.kern,'centre'))
+  %                 value = model.gating.centres(j,:)-model.comp{j}.kern.centre;
   %                 plot(value(:,1),value(:,2),'k*');
-  %                 plot(model.kern{j}.centre(:,1),model.kern{j}.centre(:,2),'ks');
+  %                 plot(model.comp{j}.kern.centre(:,1),model.comp{j}.kern.centre(:,2),'ks');
   %             end
   %         end
         %~/

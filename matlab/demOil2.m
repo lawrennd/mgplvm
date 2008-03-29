@@ -1,4 +1,4 @@
-% DEMOIL2 Demonstrate mixtues of PCoorA on oil data, with back-constraints
+% DEMOIL1 Demonstrate mixtues of DPPCA on oil data, with back-constraints
 
 % MGPLVM
 
@@ -9,14 +9,12 @@ randn('seed', 1e6);
 rand('seed', 1e6);
 
 dataSetName = 'oil';
-experimentNo = 2;
+experimentNo = 1;
 
 % load data
 [Y, lbls] = lvmLoadData(dataSetName);
 
-eIters = 20;
-mIters = 20;
-outerIters = 20;
+mIters = 1000;
 
 
 display = 1;
@@ -26,19 +24,20 @@ options = mgplvmOptions;
 
 options.back = 'mlp';
 options.backOptions = mlpOptions;
-options.optimiseInitBack = 1;
-
-options.numComps = 10;
-options.beta = 10000/mean(var(Y));
+options.numComps = 50;
+options.beta = (1/(0.5*sqrt(mean(var(Y))))).^2;
 options.kern = {'translate', 'lin', 'bias'};
+options.activeThreshold= 0.01;
+options.scale = .0625;
 latentDim = 2;
 d = size(Y, 2);
 
 display = 1;
+iters = 10;
 
 model = mgplvmCreate(latentDim, d, Y, options);
 
-model = mgplvmEMOptimise(model, display, outerIters, eIters, mIters);
+model = mgplvmOptimise(model, display, mIters);
 
 capName = dataSetName;;
 capName(1) = upper(capName(1));

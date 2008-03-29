@@ -29,16 +29,18 @@ else
   model.X = reshape(params(startVal:endVal), model.N, model.q);
 end
 
-
-if model.optimiseGating & model.optimiseGatingCentres
-  if model.optimiseGatingCentres
-    startVal = endVal + 1;
-    endVal = endVal + model.M*model.q;
-    model.centres = reshape(params(startVal:endVal), model.M, model.q);
-  end
-  model.pi = mgplvmGatingProbabilities(model);
+if model.optimiseCentres
+  startVal = endVal + 1;
+  endVal = endVal + model.M*model.q;
+  model.gating.centres = reshape(params(startVal:endVal), model.M, model.q);
 end
-
+if isfield(model, 'compLabelConstr') & model.compLabelConstr
+  % Indicator expectations are determined by X location.
+  model = mgplvmUpdateS(model);
+  
+else
+  model.pi = mgplvmComputePi(model);
+end
 
 if model.optimiseBeta
   % if optimise the beta parameter
@@ -49,15 +51,21 @@ end
 for m = 1:model.M
   X_active = model.X(find(model.activePoints(:, m)), :);
   startVal = endVal + 1;
-  endVal = endVal + model.kern{m}.nParams;
-  model.kern{m} = kernExpandParam(model.kern{m}, params(startVal: ...
+  endVal = endVal + model.comp{m}.kern.nParams;
+  model.comp{m}.kern = kernExpandParam(model.comp{m}.kern, params(startVal: ...
                                                     endVal));
-  model.K{m} = kernCompute(model.kern{m}, X_active);
-  model.B{m} = diag(model.beta*model.expectation.s(find(model.activePoints(:, m)), m));
-  model.Binv{m} = diag(1./diag(model.B{m}));
-  model.C{m} = model.K{m} + model.Binv{m};
-  [model.logdetC{m}, U] = logdet(model.C{m});
-  model.Cinv{m} = pdinv(model.C{m}, U);
+  model.comp{m}.beta = model.beta*model.expectation.s(find(model.activePoints(:, m)), m);
+  model.comp{m}.optimiseBeta = model.optimiseBeta;
+  model.comp{m}.m = model.y(find(model.activePoints(:, m)), :);
+  model.comp{m} = gpUpdateKernels(model.comp{m}, X_active);
+  model.comp{m}.N = size(X_active, 1);
+  model.comp{m}.q = size(X_active, 2);
+  %  model.K{m} = kernCompute(model.comp{m}.kern, X_active);
+%  model.B{m} = diag();
+%  model.Binv{m} = diag(1./diag(model.B{m}));
+%  model.C{m} = model.K{m} + model.Binv{m};
+%  [model.logdetC{m}, U] = logdet(model.C{m});
+%  model.Cinv{m} = pdinv(model.C{m}, U);
 end
 
 % Give parameters to dynamics if they are there.

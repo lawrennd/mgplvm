@@ -15,23 +15,22 @@ experimentNo = 1;
 [Y, lbls] = lvmLoadData(dataSetName);
 
 % Optimisation iters
-eIters = 20;
-mIters = 20;
-outerIters = 20;
+iters = 1000;
 
 
 display = 1;
 
 % Set up model
 options = mgplvmOptions;
-
-options.back = 'kbr';
-options.backOptions = kbrOptions(Y);
-options.optimiseInitBack = false;
-
-options.numComps = 10;
+%/~
+%options.back = 'kbr';
+%options.backOptions = kbrOptions(Y);
+%options.optimiseInitBack = false;
+%~/
+options.numComps = 100;
 options.beta = (1/(0.5*sqrt(mean(var(Y))))).^2;
 options.kern = {'translate', 'lin', 'bias'};
+options.scale = 0.1;
 latentDim = 2;
 d = size(Y, 2);
 
@@ -39,7 +38,7 @@ display =1;
 
 model = mgplvmCreate(latentDim, d, Y, options);
 
-model = mgplvmEMOptimise(model, display, outerIters, eIters, mIters);
+model = mgplvmOptimise(model, display, iters);
 
 capName = dataSetName;;
 capName(1) = upper(capName(1));

@@ -42,19 +42,31 @@ model.d = size(model.y, 2);
 model.M = options.numComps;
 model.q = q;
 model.activeThreshold = options.activeThreshold;
-model.optimiseGating = options.optimiseGating;
-model.optimiseGatingCentres = options.optimiseGatingCentres;
+model.optimiseCentres = options.optimiseCentres;
+model.estepCentres = options.estepCentres;
 model.optimiseBeta = options.optimiseBeta;
+model.isGating = options.isGating;
+model.isInfinite = options.isInfinite;
+model.compLabelConstr = options.compLabelConstr;
+if model.isGating & model.isInfinite;
+  error('Infinite model cannot use a gating network.');
+end
 model.optimiser = options.optimiser;
 
 if isstruct(options.kern) 
   for m = 1:model.M
-    model.kern{m} = options.kern;
+    model.comp{m}.kern = options.kern;
   end
 else
   for m=1:model.M
-    model.kern{m} = kernCreate(model.X, options.kern);
+    model.comp{m}.kern = kernCreate(model.X, options.kern);
   end
+end
+for m=1:model.M
+  model.comp{m}.approx = 'ftc';
+  model.comp{m}.d = model.d;
+  model.comp{m}.learnScales = false;
+  model.comp{m}.isMissingData = false;
 end
 model.minActive = options.minActive;
 
@@ -78,12 +90,13 @@ else
 end
 
 
-
+ind = randperm(model.N);
+ind = ind(1:model.M);
 % Some heuristic clustering to initialise gating centres.
-centres=kmeans(randn(model.M, model.q), model.X, foptions);
+%centres = kmeans(randn(model.M, model.q), model.X, foptions);
+centres = model.X(ind, :);
 
-
-model = mgplvmComputeInitAssignment(model,centres,options);
+model = mgplvmComputeInitAssignment(model, centres, options);
 
 %/~
 % switch model.q 
@@ -114,8 +127,8 @@ ind3 = [];
 for m = length(ind2)+1:model.M
   ind3 = [ind3 ceil(rand(1)*size(model.X, 1))];
 end
-model.centres = [centres; model.X(ind3, :)];
-
+model.gating.centres = [centres; model.X(ind3, :)];
+model.gating.precision = repmat(1/(options.scale*options.scale), 1, model.M);
 % Recompute hard assignments.
 model = mgplvmComputeInitAssignment(model,centres,options);
 
@@ -134,10 +147,18 @@ model = mgplvmComputeInitAssignment(model,centres,options);
 % %   plot([1:model.N]',repmat(centres(m,:),model.N));
 % end
 %~/
-model.pi = mgplvmGatingProbabilities(model);
-model.beta = options.beta;
-model.betaTransform =  optimiDefaultConstraint('positive');
-model.expectation.s = model.pi;
+if model.isInfinite
+  model.a0=options.a0;
+  model.a1=options.a1;  
+end
+
+if model.isGating
+  model.pi = mgplvmComputePi(model);
+  model.expectation.s = sparse(model.pi);
+else 
+  model.pi = ones(1, model.M)/model.M;
+  model.expectation.s = mgplvmComputeS(model, model.X);
+end
 
 model.activePoints = model.expectation.s>model.activeThreshold;
 for m = 1:model.M
@@ -148,6 +169,8 @@ for m = 1:model.M
   end
 end
 
+model.beta = options.beta;
+model.betaTransform =  optimiDefaultConstraint('positive');
 
 params = mgplvmExtractParam(model);
 model = mgplvmExpandParam(model, params);

@@ -1,4 +1,4 @@
-function Xpi = mgplvmGatingProbabilities(model, X)
+function [Xpi, numer] = mgplvmGatingProbabilities(model, X)
 
 % MGPLVMGATINGPROBABILITIES Compute the gating probabilities for the
 % mixture of GP-LVMs.
@@ -21,7 +21,8 @@ if nargin < 2
   X = model.X;
 end
 % Work out gating probabilities
-lognumer = -0.5*dist2(X, model.centres);
+lognumer = -0.5*dist2(X, model.gating.centres);
+lognumer = lognumer.*repmat(model.gating.precision, size(X, 1), 1);
 lognumer = lognumer - repmat(max(lognumer, [], 2), 1, model.M);
 numer = exp(lognumer);
 denom = sum(numer, 2);

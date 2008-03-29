@@ -15,8 +15,12 @@ function [mu, varsigma, var_f, mean_F] = mgplvmPosteriorMeanVar(model, X);
 % COPYRIGHT : Neil D. Lawrence and Raquel Urtasun, 2007
 
 % MGPLVM
-  
-Xpi = mgplvmGatingProbabilities(model, X);
+
+if model.isGating 
+  Xpi = mgplvmGatingProbabilities(model, X);
+else
+  Xpi = mgplvmComputeS(model, X);
+end
 [mean_F, var_F, secMo_F] = mgplvmComponentPosteriorMeanVar(model, X);
 
 % Work out means and variances
