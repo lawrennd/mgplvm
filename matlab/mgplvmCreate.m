@@ -174,5 +174,3 @@ model.betaTransform =  optimiDefaultConstraint('positive');
 
 params = mgplvmExtractParam(model);
 model = mgplvmExpandParam(model, params);
-
-
