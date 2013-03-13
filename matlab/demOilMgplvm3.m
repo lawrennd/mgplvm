@@ -1,4 +1,4 @@
-% DEMOIL3 Demonstrate mixtures of GPLVM on oil data, with back-constraints
+% DEMOILMGPLVM3 Demonstrate mixtues of RBF GPLVM on oil data, with back-constraints
 
 % MGPLVM
 
@@ -28,11 +28,9 @@ options.back = 'mlp';
 options.backOptions = mlpOptions;
 options.optimiseInitBack = 1;
 
-options.numComps = 50;
-options.beta = (1/(0.5*sqrt(mean(var(Y))))).^2;
+options.numComps = 5;
+options.beta = 1;
 options.kern = {'rbf', 'bias'};
-options.activeThreshold= 0.01;
-options.scale = .25;
 latentDim = 2;
 d = size(Y, 2);
 
@@ -42,19 +40,17 @@ model = mgplvmCreate(latentDim, d, Y, options);
 
 model = mgplvmEMOptimise(model, display, outerIters, eIters, mIters);
 
-capName = dataSetName;;
-capName(1) = upper(capName(1));
-save(['dem' capName num2str(experimentNo) '.mat'], 'model');
+mgplvmWriteResult(model, dataSetName, experimentNo);
  
 if exist('printDiagram') & printDiagram
-   fgplvmPrintPlot(model, lbls, capName, experimentNo);
+   lvmPrintPlot(model, lbls, capName, experimentNo);
 end
  
 % Load the results and display dynamically.
-fgplvmResultsDynamic(dataSetName, experimentNo, 'vector')
+lvmResultsDynamic('mgplvm', dataSetName, experimentNo, 'vector')
 
 % compute the nearest neighbours errors in latent space.
-errors = fgplvmNearestNeighbour(model, lbls);
+errors = lvmNearestNeighbour(model, lbls);
 
 disp(['Classification errors ',num2str(errors)]);
 

@@ -1,19 +1,19 @@
-% DEMSTICK1 Model the stick man using an linear kernel and dynamics.
+% DEMBRENDANMGPLVM1 Model the face data with a 2-D RBF GPLVM.
 
 % MGPLVM
-
-close all;
-clear;
 
 % Fix seeds
 randn('seed', 1e5);
 rand('seed', 1e5);
 
-dataSetName = 'stick';
+display = 0;
+
+dataSetName = 'brendan';
 experimentNo = 1;
 
 % load data
 [Y, lbls] = lvmLoadData(dataSetName);
+Y = Y(1:100, :);
 
 eIters = 20;
 mIters = 20;
@@ -50,28 +50,19 @@ model = modelAddDynamics(model, 'gp', options);
 
 model = mgplvmEMOptimise(model, display, outerIters, eIters, mIters);
 
-
-% Save the results.
-capName = dataSetName;
-capName(1) = upper(capName(1));
-save(['dem' capName num2str(experimentNo) '.mat'], 'model');
-
+mgplvmWriteResult(model, dataSetName, experimentNo);
+ 
 if exist('printDiagram') & printDiagram
-  fgplvmPrintPlot(model, lbls, capName, experimentNo);
+   lvmPrintPlot(model, lbls, capName, experimentNo);
 end
-
-% load connectivity matrix
-[void, connect] = mocapLoadTextData('run1');
+ 
 % Load the results and display dynamically.
-fgplvmResultsDynamic(dataSetName, experimentNo, 'stick', connect)
-%/~figure(1)
-%plotseries_old(model.X,[1],'b');
-%~/
+lvmResultsDynamic('mgplvm', dataSetName, experimentNo, 'vector')
 
+% compute the nearest neighbours errors in latent space.
+errors = lvmNearestNeighbour(model, lbls);
 
-figure
+disp(['Classification errors ',num2str(errors)]);
+
 mgplvmPlotClusters(model);
-
-
-
 

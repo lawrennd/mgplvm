@@ -1,19 +1,19 @@
-% DEMBRENDAN1 Model the face data with a 2-D RBF GPLVM.
+% DEMSTICKMGPLVM2 Model the stick man using an RBF kernel and dynamics.
 
 % MGPLVM
+
+close all;
+clear;
 
 % Fix seeds
 randn('seed', 1e5);
 rand('seed', 1e5);
 
-display = 0;
-
-dataSetName = 'brendan';
-experimentNo = 1;
+dataSetName = 'stick';
+experimentNo = 2;
 
 % load data
 [Y, lbls] = lvmLoadData(dataSetName);
-Y = Y(1:100, :);
 
 eIters = 20;
 mIters = 20;
@@ -26,11 +26,11 @@ options.optimiseGating = false;
 
 options.numComps = 5;
 options.beta = (1/(0.5*sqrt(mean(var(Y))))).^2;
-options.kern = {'translate', 'lin', 'bias'};
+options.kern = {'rbf', 'bias'};
 latentDim = 2;
 d = size(Y, 2);
 
-display =1;
+display = 1;
 
 
 model = mgplvmCreate(latentDim, d, Y, options);
@@ -52,9 +52,7 @@ model = mgplvmEMOptimise(model, display, outerIters, eIters, mIters);
 
 
 % Save the results.
-capName = dataSetName;
-capName(1) = upper(capName(1));
-save(['dem' capName num2str(experimentNo) '.mat'], 'model');
+mgplvmWriteResult(model, dataSetName, experimentNo);
 
 if exist('printDiagram') & printDiagram
   fgplvmPrintPlot(model, lbls, capName, experimentNo);
@@ -63,11 +61,14 @@ end
 % load connectivity matrix
 [void, connect] = mocapLoadTextData('run1');
 % Load the results and display dynamically.
-fgplvmResultsDynamic(dataSetName, experimentNo, 'stick', connect)
-%/~figure(1)
-%plotseries_old(model.X,[1],'b');
-%~/
+lvmResultsDynamic('mgplvm', dataSetName, experimentNo, 'stick', connect)
+figure(1)
+plotseries_old(model.X,[1],'b');
 
 
 figure
 mgplvmPlotClusters(model);
+
+
+
+

@@ -1,4 +1,4 @@
-% DEMOIL1 Demonstrate mixtues of DPPCA on oil data, with back-constraints
+% DEMOILMGPLVM2 Demonstrate mixtues of DPPCA on oil data, with back-constraints
 
 % MGPLVM
 
@@ -9,7 +9,7 @@ randn('seed', 1e6);
 rand('seed', 1e6);
 
 dataSetName = 'oil';
-experimentNo = 1;
+experimentNo = 2;
 
 % load data
 [Y, lbls] = lvmLoadData(dataSetName);
@@ -36,22 +36,19 @@ display = 1;
 iters = 10;
 
 model = mgplvmCreate(latentDim, d, Y, options);
-
 model = mgplvmOptimise(model, display, mIters);
 
-capName = dataSetName;;
-capName(1) = upper(capName(1));
-save(['dem' capName num2str(experimentNo) '.mat'], 'model');
+mgplvmWriteResult(model, dataSetName, experimentNo);
  
 if exist('printDiagram') & printDiagram
-   fgplvmPrintPlot(model, lbls, capName, experimentNo);
+   lvmPrintPlot(model, lbls, capName, experimentNo);
 end
  
 % Load the results and display dynamically.
-fgplvmResultsDynamic(dataSetName, experimentNo, 'vector')
+lvmResultsDynamic('mgplvm', dataSetName, experimentNo, 'vector')
 
 % compute the nearest neighbours errors in latent space.
-errors = fgplvmNearestNeighbour(model, lbls);
+errors = lvmNearestNeighbour(model, lbls);
 
 disp(['Classification errors ',num2str(errors)]);
 
