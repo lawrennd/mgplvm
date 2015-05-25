@@ -12,7 +12,15 @@
 
 RELEASEINFORMATION
 
-This is the first release associated with the 2007 NIPS Submission.
+This release was triggered by several requests and intereactions concerning mixtures of GP-LVMs.
+
+<h3>Version 0.11</h3>
+
+This was the second release and was associated with an ICML 2008 submission.
+
+<h3>Version 0.1</h3>
+
+This is the first release and was associated with a 2007 NIPS Submission.
 
 <h2>Examples</h2>
 
