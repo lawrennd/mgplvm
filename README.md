@@ -12,9 +12,9 @@ Release Information
 
 As well as downloading the MGPLVM software you need to obtain the toolboxes specified below. 
 
-| **Toolbox**                                                                | **Version** |
-|----------------------------------------------------------------------------|-------------|
-| [NETLAB](http://www.aston.ac.uk/eas/research/groups/ncrg/resources/netlab/ | 3.3         |
+| **Toolbox**                                                | **Version** |
+|------------------------------------------------------------|-------------|
+| [NETLAB](http://www.aston.ac.uk/eas/research/groups/ncrg/resources/netlab/) | 3.3         |
 | [GPMAT](http://sheffieldml.github.io/GPmat/downloadFiles/vrs0p01)  | 0.01        |
 
 This release was triggered by several requests and intereactions concerning mixtures of GP-LVMs.
@@ -42,10 +42,10 @@ The first example is run using `demOil1001.m`. It is a mixture of principal coor
 
 ![](demOil1001.png)![](demOil1001Cluster.png)
 
-*Mixtures of GP-LVM on the reduced oil data using *Left*: linear kernels (Principal Coordinate Analysis, `demOil1001`) and *Right*: the assignments of the points to clusters.*
+*Mixtures of GP-LVM on the reduced oil data using **Left**: linear kernels (Principal Coordinate Analysis, `demOil1001`) and **Right**: the assignments of the points to clusters.*
 
 ![](demOil1002.png)![](demOil1002Cluster.png)
-*Mixtures of GP-LVM on the reduced oil data using *Left*: linear kernels (Principal Coordinate Analysis, `demOil1001`) and *Right*: the RBF kernel (`demOil1002`).*
+*Mixtures of GP-LVM on the reduced oil data using **Left**: linear kernels (Principal Coordinate Analysis, `demOil1001`) and **Right**: the RBF kernel (`demOil1002`).*
 
 The second example replaces the linear kernels with radial basis function kernels. This can be run using `demOil1002.m`.
 
@@ -53,24 +53,24 @@ The second example replaces the linear kernels with radial basis function kernel
 
 ![](demOil1.png)![](demOil1Cluster.png)
 
-*Mixtures of GP-LVM on the full oil data using *Left*: linear kernels (Principal Coordinate Analysis, `demOil1`) (10 initial components) and *Right* the assignment of points to components.*
+*Mixtures of GP-LVM on the full oil data using **Left**: linear kernels (Principal Coordinate Analysis, `demOil1`) (10 initial components) and **Right** the assignment of points to components.*
 
 ![](demOil2.png)![](demOil2Cluster.png)
 
-*Mixtures of GP-LVM on the full oil data using *Left*: linear kernels (Principal Coordinate Analysis, `demOil2`) (20 initial components) and *Right* the assignment of points to components.*
+*Mixtures of GP-LVM on the full oil data using **Left**: linear kernels (Principal Coordinate Analysis, `demOil2`) (20 initial components) and **Right** the assignment of points to components.*
 
 ![](demOil3.png)![](demOil3Cluster.png)
 
-*Mixtures of GP-LVM on the full oil data using *Left*: RBF kernels, `demOil3`) (5 initial components) and *Right* the assignment of points to components.*
+*Mixtures of GP-LVM on the full oil data using **Left**: RBF kernels, `demOil3`) (5 initial components) and **Right** the assignment of points to components.*
 
 #### Stick Man Data
 
 ![](demStick1.png)![](demStick1Cluster.png)
 
-*Mixtures of GP-LVM on the full oil data using *Left*: linear kernels (Principal Coordinate Analysis, `demStick1`) (10 initial components) and *Right* the assignment of points to components.*
+*Mixtures of GP-LVM on the full oil data using **Left**: linear kernels (Principal Coordinate Analysis, `demStick1`) (10 initial components) and **Right** the assignment of points to components.*
 
 ![](demStick2.png)![](demStick2Cluster.png)
 
-* Mixtures of GP-LVM on the full oil data using *Left*: linear kernels (Principal Coordinate Analysis, `demStick2`) (20 initial components) and *Right* the assignment of points to components.*
+* Mixtures of GP-LVM on the full oil data using **Left**: linear kernels (Principal Coordinate Analysis, `demStick2`) (20 initial components) and **Right** the assignment of points to components.*
 
 Page updated on Tue Mar 19 11:40:37 2013
