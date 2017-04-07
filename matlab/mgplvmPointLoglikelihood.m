@@ -1,4 +1,4 @@
-function ll = mgplvmPointLogLikelihood(model, x, y)
+function ll = mgplvmPointLoglikelihood(model, x, y)
 
 % MGPLVMPOINTLOGLIKELIHOOD Log-likelihood of a point for the GP-LVM.
 % FORMAT
@@ -33,4 +33,4 @@ for i=1:model.M
     end
   end
 end
-ll = sum(exp(lls))
+ll = exp(sum(lls))

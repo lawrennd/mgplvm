@@ -26,6 +26,6 @@ if model.isInfinite
 elseif model.isGating
   pim = mgplvmGatingProbabilities(model);
 else
-  pim = (sum(model.expectation.s, 1)+1)/(model.N+model.M);
+  pim = (sum(model.expectation.s, 1)+1)/(model.N*model.M); 
 end
 
