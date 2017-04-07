@@ -33,4 +33,4 @@ for i=1:model.M
     end
   end
 end
-ll = exp(sum(lls))
+ll = log(sum(exp(lls)))
